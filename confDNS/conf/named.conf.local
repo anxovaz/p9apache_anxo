@@ -1,0 +1,8 @@
+
+zone "anxovaz.com" {
+	type master;
+	file "/var/lib/bind/db.anxovaz.com";
+	allow-query {
+		any;
+		};
+	};

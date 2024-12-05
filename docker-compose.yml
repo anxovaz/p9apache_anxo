@@ -1,0 +1,31 @@
+services:
+  asir-apache:
+    image: php:7.4-apache
+    container_name: ubuntu-apache
+    ports:
+      - '80:80'
+    networks:
+      apache_subnet:
+        ipv4_address: 172.29.4.2
+    volumes:
+      - ./www:/var/www
+      - ./confApache:/etc/apache2
+  asir_bind9:
+    container_name: asir_bind9_2
+    image: ubuntu/bind9
+    platform: linux/amd64
+    ports:
+      - 55:53
+    networks:
+      apache_subnet:
+        ipv4_address: 172.29.4.3
+    volumes:
+      - ./confDNS/conf:/etc/bind
+      - ./confDNS/zonas:/var/lib/bind
+networks:
+  apache_subnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/16
